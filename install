@@ -1,0 +1,5 @@
+mod u+x install-i3
+mod u+x set-wallpaper
+
+./scripts/install-i3
+./scripts/set-wallpaper
