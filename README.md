@@ -16,8 +16,13 @@ Main use
 | mod+e |Toggle the orientation of the current window|
 
 Setup certain applications to be opened in a fixed workspaced: 
+
 Launch xprop | grep CLASS and select with the mouse the window. The corresponding output will be written in the i3 config file as:
+
 assign [class="outputapp"] $ws3
+
 If it does not work, you can also move them by the window name with:
+
 for_window [class="name"] move to workspace $ws4
+
 But be careful because every single window with this name will be affected.
