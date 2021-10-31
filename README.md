@@ -9,7 +9,6 @@ Main use
 | mod + arrows |Move between windows in same workspace |
 | mod+f |Temporary fullscreen a window |
 | mod+shift+q |Close window |
-| mod+ | |
 | mod+Shift+c|Reload configuration file |
 | mod+Shift+r|Restart i3 inplace preserving layout |
 | mod+Shift+e |Exit i3 |
