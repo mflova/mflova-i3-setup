@@ -1,0 +1,2 @@
+To set the wallpaper up, just write:
+feh --bg-scale path/to/img
