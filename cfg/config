@@ -218,10 +218,6 @@ assign [class="Slack"] $ws6
 for_window [class="Slack"] move to workspace $ws5
 for_window [class="rviz"] move to workspace $ws6
 
-
-
-exec --no-startup-id i3-msg 'exec slack, workspace $ws5; exec spotify, workspace $ws4; exec google-chrome mail.google.com https://calendar.google.com/calendar/u/0/r?pli=1  https://flyability.atlassian.net/jira/software/c/projects/GEU/boards/99 https://drive.google.com/drive/my-drive https://app.holaspirit.com/auth https://flyability.odoocloud.ch/web/login#home; sleep 1; workspace $ws1'
-
 # Moving workspaces between screens
 bindsym $mod+p move workspace to output right
 
