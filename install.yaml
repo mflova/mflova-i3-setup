@@ -1,0 +1,26 @@
+- hosts: localhost
+  become: yes
+  tasks:
+  - name: Install I3
+    apt:
+      pkg:
+        - i3
+        - xbacklight
+        - alsa-utils
+        - pulseaudio
+        - feh
+      update_cache: yes
+
+  - name: Get $HOME variable
+    shell: "echo $HOME"
+    become: no
+    register: HOME
+
+  - name: Install I3 configuration
+    ansible.builtin.copy:
+      src: "{{playbook_dir}}/cfg/config"
+      dest: "{{HOME.stdout_lines[0]}}/.config/i3/config/"
+
+  - name: Set wallpaper
+    shell: 'echo "feh --bg-scale mflova-linux-setup/mflova-i3-setup/wallpaper/wallpaper.png" >> ~/.profile'
+    become: no
