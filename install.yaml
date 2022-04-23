@@ -19,7 +19,7 @@
   - name: Install I3 configuration
     ansible.builtin.copy:
       src: "{{playbook_dir}}/cfg/config"
-      dest: "{{HOME.stdout_lines[0]}}/.config/i3/config/"
+      dest: "{{HOME.stdout_lines[0]}}/.config/i3/"
 
   - name: Set wallpaper
     shell: 'echo "feh --bg-scale mflova-linux-setup/mflova-i3-setup/wallpaper/wallpaper.png" >> ~/.profile'

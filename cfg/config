@@ -108,10 +108,10 @@ bindsym $mod+a focus parent
 set $ws1 "1:terminal"
 set $ws2 "2:vim"
 set $ws3 "3:web"
-set $ws4 "4:media"
-set $ws5 "5:company"
-set $ws6 "6"
-set $ws7 "7"
+set $ws4 "4:company"
+set $ws5 "5:chat"
+set $ws6 "6:misc"
+set $ws7 "7:media"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
@@ -176,18 +176,18 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-#bar {
-#        status_command i3status
-#}
 bar {
-	font pango:Inconsolata 10
-	position top
-	tray_output none
-	status_command ~/.i3/bumblebee-status/bumblebee-status -m nic disk:root cpu \
-		memory battery date time pasink pasource dnf \
-		-p root.path=/ time.format="%H:%M CW %V" date.format="%a, %b %d %Y" \
-		-t solarized-powerline
+        status_command i3status
 }
+#bar {
+#	font FontAwesome
+#	position top
+#	tray_output none
+#	status_command ~/.i3/bumblebee-status/bumblebee-status -m nic disk:root cpu \
+#		memory battery date time pasink pasource \
+#		-p root.path=/ time.format="%H:%M CW %V" date.format="%a, %b %d %Y" \
+#		-t solarized-powerline
+#}
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec light -A 5 # increase screen brightness
@@ -197,18 +197,37 @@ bindsym XF86MonBrightnessDown exec light -U 5 # decrease screen brightness
 
 # exec --no-startup-id google-chrome
 
-set $window_delay 0.5 # Increase if the startup does not work well
-#exec i3-msg 'exec --no-startup-id x-terminal-emulator -name term-ws1, sleep $window_delay'
-#assign [instance="ws1"] $ws1
+set $window_delay 1 # Increase if the startup does not work well
 #exec i3-msg 'exec --no-startup-id x-terminal-emulator -name term-ws2 -e vim, sleep $window_delay'
-#assign [instance="ws2"] $ws2
-exec --no-startup-id i3-msg 'workspace $ws3; exec google-chrome, sleep $window_delay'
-exec --no-startup-id i3-msg 'workspace $ws4; exec spotify, sleep $window_delay'
-# exec --no-startup-id i3-msg 'workspace $ws5; exec google-chrome google.com reddit.com, sleep $window_delay'
+#assign [instance="term-ws2"] $ws2
+##exec --no-startup-id i3-msg 'workspace $ws1; exec x-terminal-emulator, sleep $window_delay'
+# exec --no-startup-id i3-msg 'workspace $ws3; exec google-chrome, sleep $window_delay'
+#exec --no-startup-id i3-msg 'workspace $ws1; exec x-terminal_emulator, sleep $window_delay'
+#exec --no-startup-id i3-msg 'workspace $ws4; exec spotify, sleep $window_delay'
+#exec --no-startup-id i3-msg 'workspace $ws5; exec google-chrome mail.google.com https://calendar.google.com/calendar/u/0/r?pli=1 https://drive.google.com/drive/my-drive https://app.holaspirit.com/auth https://flyability.odoocloud.ch/web/login#home https://flyability.atlassian.net/jira/software/c/projects/GEU/boards/99'
+#exec --no-startup-id i3-msg 'sleep 2, workspace $ws1, sleep $window_delay'
 
 
 ##==================================================##
 #                         *** Workspace specific settings ***                     #
 ##=================================================##
 # Assign Workspaces:
-for_window [class="Spotify"] move to workspace $ws4
+for_window [class="Spotify"] move to workspace $ws7
+
+assign [class="Slack"] $ws6
+for_window [class="Slack"] move to workspace $ws5
+for_window [class="rviz"] move to workspace $ws6
+
+
+
+exec --no-startup-id i3-msg 'exec slack, workspace $ws5; exec spotify, workspace $ws4; exec google-chrome mail.google.com https://calendar.google.com/calendar/u/0/r?pli=1  https://flyability.atlassian.net/jira/software/c/projects/GEU/boards/99 https://drive.google.com/drive/my-drive https://app.holaspirit.com/auth https://flyability.odoocloud.ch/web/login#home; sleep 1; workspace $ws1'
+
+# Moving workspaces between screens
+bindsym $mod+p move workspace to output right
+
+# Alternate workspaces
+bindsym $mod+Tab workspace back_and_forth
+
+# Screenshots
+bindsym Print       exec flameshot full
+bindsym Shift+Print exec flameshot gui
