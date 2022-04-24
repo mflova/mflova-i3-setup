@@ -9,7 +9,7 @@
         - alsa-utils
         - pulseaudio
         - feh
-      update_cache: yes
+    update_cache: yes
 
   - name: Get $HOME variable
     shell: "echo $HOME"
@@ -22,5 +22,5 @@
       dest: "{{HOME.stdout_lines[0]}}/.config/i3/"
 
   - name: Set wallpaper
-    shell: 'echo "feh --bg-scale mflova-linux-setup/mflova-i3-setup/wallpaper/wallpaper.png" >> ~/.profile'
+    shell: 'echo "feh --bg-scale {{playbook_dir}}/wallpaper/wallpaper.png" >> ~/.profile'
     become: no
