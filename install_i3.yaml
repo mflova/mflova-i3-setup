@@ -9,7 +9,7 @@
         - alsa-utils
         - pulseaudio
         - feh
-    update_cache: yes
+      update_cache: yes
 
   - name: Get $HOME variable
     shell: "echo $HOME"
