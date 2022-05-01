@@ -16,6 +16,8 @@ Main use
 | mod+r |Resize mode |
 | mod+e |Toggle the orientation of the current window|
 | mod+s |Toggle the window with the biggest one in the workspace|
+| mod+Enter| New window wth terminal|
+| mod+Shift+Enter| New window with google chrome browser|
 
 Setup certain applications to be opened in a fixed workspace: 
 
