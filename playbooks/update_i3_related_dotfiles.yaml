@@ -1,0 +1,24 @@
+- hosts: localhost
+  become: no
+  tasks:
+
+  - name: Get $HOME variable
+    shell: "echo $HOME"
+    become: no
+    register: HOME
+
+  - name: Update I3 config from the laptop to the repo
+    ansible.builtin.copy:
+      src: "{{HOME.stdout_lines[0]}}/.config/i3/config"
+      dest: "{{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/cfg/i3/config"
+    become: no
+
+  - name: Update gtk config from the laptop to the repo
+    ansible.builtin.copy:
+      src: "{{HOME.stdout_lines[0]}}/.config/gtk-3.0/gtk.css"
+      dest: "{{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/cfg/gtk-3.0/gtk.css"
+
+  - name: Update polybar (forest theme) config from the laptop to the repo
+    ansible.builtin.copy:
+      src: "{{HOME.stdout_lines[0]}}/.config/polybar/forest"
+      dest: "{{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/cfg"

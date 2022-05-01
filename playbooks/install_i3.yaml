@@ -1,0 +1,86 @@
+- hosts: localhost
+  become: yes
+  tasks:
+  - name: Install I3
+    apt:
+      pkg:
+        - i3-wm
+        - i3
+        - xbacklight
+        - alsa-utils
+        - pulseaudio
+        - feh
+      update_cache: yes
+
+  - name: Get $HOME variable
+    shell: "echo $HOME"
+    become: no
+    register: HOME
+
+  - name: Install I3 configuration
+    ansible.builtin.copy:
+      src: "{{playbook_dir}}/../cfg/i3/config"
+      dest: "{{HOME.stdout_lines[0]}}/.config/i3/"
+
+  - name: Set wallpaper
+    shell: 'echo "feh --bg-scale {{playbook_dir}}/../wallpaper/wallpaper.png" >> ~/.profile'
+    become: no
+
+  - name: Add i3-gaps repository
+    ansible.builtin.apt_repository:
+      repo: ppa:regolith-linux/release
+
+  - name: Install i3-gaps and other dependencies
+    apt:
+      name:
+        - xdotool
+        - python3-pip
+        - i3-gaps
+      update_cache: yes
+
+  - name: Install i3-layouts
+    pip:
+      name: i3-layouts
+    become: no
+
+  - name: Install dependencies to open new terminals in same directory
+    apt:
+      name: libx11-dev
+
+  - name: Cloning repo to open new terminals in same directory
+    git:
+      repo: https://github.com/schischi/xcwd
+      dest: "{{playbook_dir}}/../repos/xcwd"
+
+  - name: Build the script to open new terminals in same directory
+    shell: 
+      cmd: make
+      chdir: "{{playbook_dir}}/../repos/xcwd"
+
+  - name: Install the script to open new terminals in same directory
+    shell: 
+      cmd : make install
+      chdir: "{{playbook_dir}}/../repos/xcwd"
+
+  - name: Install python3 for the written scripts
+    apt:
+      name: python3
+
+  - name: Reinstall i3ipc
+    pip:
+      name: i3ipc
+      state: absent
+
+  - name: Install i3ipc dependencies
+    become: no
+    pip:
+      name: python3_xlib
+
+  - name: Install i3ipc through shell command
+    become: no
+    shell: "pip install i3ipc"
+
+  - name: Copy gtk configuration for terminal padding
+    ansible.builtin.copy:
+      src: "{{playbook_dir}}/../cfg/gtk-3.0/gtk.css"
+      dest: "{{HOME.stdout_lines[0]}}/.config/gtk-3.0/"

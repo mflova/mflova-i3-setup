@@ -10,6 +10,7 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -41,7 +42,10 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# bindsym $mod+Return exec "terminator --working-directory=`xcwd`"
+bindsym $mod+Return exec cd "$(xcwd)" && exec terminator
+# Alternative:
+# bindsym $mod+Shift+Return exec terminator --working-directory="`xcwd`"
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -66,16 +70,16 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+ntilde move right
+bindsym $mod+Shift+j exec i3l move left
+bindsym $mod+Shift+k exec i3l move down
+bindsym $mod+Shift+l exec i3l move up
+bindsym $mod+Shift+ntilde exec i3l move right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Left exec i3l move left
+bindsym $mod+Shift+Down exec i3l move down
+bindsym $mod+Shift+Up exec i3l move up
+bindsym $mod+Shift+Right exec i3l move right
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -87,7 +91,6 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -108,10 +111,9 @@ bindsym $mod+a focus parent
 set $ws1 "1:terminal"
 set $ws2 "2:vim"
 set $ws3 "3:web"
-set $ws4 "4:company"
+set $ws4 "4:misc"
 set $ws5 "5:chat"
-set $ws6 "6:misc"
-set $ws7 "7:media"
+set $ws7 "6:media"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
@@ -176,9 +178,9 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        status_command i3status
-}
+#bar {
+#       status_command i3status
+#}
 #bar {
 #	font FontAwesome
 #	position top
@@ -211,12 +213,16 @@ set $window_delay 1 # Increase if the startup does not work well
 ##==================================================##
 #                         *** Workspace specific settings ***                     #
 ##=================================================##
+# Launch polybar status bar (https://github.com/polybar/polybar/wiki)
+# forest
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh --forest
+
 # Assign Workspaces:
-for_window [class="Spotify"] move to workspace $ws7
+for_window [class="Spotify"] move to workspace $ws6
 
 assign [class="Slack"] $ws6
 for_window [class="Slack"] move to workspace $ws5
-for_window [class="rviz"] move to workspace $ws6
+for_window [class="rviz"] move to workspace $ws4
 
 # Moving workspaces between screens
 bindsym $mod+p move workspace to output right
@@ -224,6 +230,23 @@ bindsym $mod+p move workspace to output right
 # Alternate workspaces
 bindsym $mod+Tab workspace back_and_forth
 
+# Switch the container to the biggest container
+bindsym $mod+s exec python3 ~/mflova-linux-setup/mflova-i3-setup/scripts/swapper.py
+
 # Screenshots
 bindsym Print       exec flameshot full
 bindsym Shift+Print exec flameshot gui
+
+# Small border in the focuses window
+for_window [class=".*"] border pixel 1
+# Color of the border
+client.focused #000000 #285577 #ffffff #37827e #37827e
+
+# Gaps
+gaps outer 5
+gaps inner 10
+
+# Dynamic layouts
+exec i3-layouts
+set $i3l vstack to workspace $ws1
+set $i3l vstack to workspace $ws3

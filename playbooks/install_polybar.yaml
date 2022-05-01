@@ -1,0 +1,94 @@
+- hosts: localhost
+  become: yes
+  tasks:
+
+    - name: Get $HOME variable
+      shell: "echo $HOME"
+      become: no
+      register: HOME
+
+    - name: Install Polybar dependencies
+      apt:
+        name:
+          - cmake 
+          - cmake-data 
+          - libcairo2-dev 
+          - libxcb1-dev 
+          - libxcb-ewmh-dev
+          - libxcb-icccm4-dev 
+          - libxcb-image0-dev 
+          - libxcb-randr0-dev 
+          - libxcb-util0-dev 
+          - libxcb-xkb-dev 
+          - pkg-config 
+          - python3-xcbgen 
+          - python3-sphinx
+          - xcb-proto 
+          - libxcb-xrm-dev 
+          - libasound2-dev
+          - libmpdclient-dev
+          - libiw-dev
+          - libcurl4-openssl-dev
+          - libpulse-dev
+          - libxcb-composite0-dev
+          - libjsoncpp-dev
+          - libuv1-dev
+
+    - name: Create symbolic link
+      shell: ln -s /usr/include/jsoncpp/json/ /usr/include/json
+
+    - name: Clone Polybar
+      git:
+        repo: https://github.com/jaagr/polybar.git
+        dest: "{{playbook_dir}}/../repos/polybar"
+
+    - name: Set repo as safe
+      shell: "git config --global --add safe.directory {{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/repos/polybar"
+
+    - name: Install polybar
+      shell: 
+        cmd: "sudo -E bash build.sh --auto --all-features -g -j "
+        chdir: "{{playbook_dir}}/../repos/polybar"
+      become: no
+
+    - name: Install polybar themes dependencies (apt)
+      apt:
+        name:
+          - rofi
+          - calc
+          - ccache
+          - imagemagick
+          - procps
+          - feh
+          - python3-pip
+          - libnm-dev
+
+    - name: Install polybar themes dependencies (pip)
+      pip:
+        name: pywal
+
+    - name: Clone Polybar collections
+      git:
+        repo: https://github.com/adi1090x/polybar-themes.git
+        dest: "{{playbook_dir}}/../repos/polybar-themes"
+
+    - name: Set polybar themes permissions
+      shell: chmod +x {{playbook_dir}}/../repos/polybar-themes/setup.sh
+
+    - name: Install polybar themes
+      pause:
+        prompt: "From {{playbook_dir}}/../repos/polybar-themes, run 'sudo -E bash setup.sh' with option 1"
+
+    - name: Get $HOME variable
+      shell: "echo $HOME"
+      become: no
+      register: HOME
+
+    - name: Copy personal configuration
+      ansible.builtin.copy:
+        src: "{{playbook_dir}}/../cfg/forest"
+        dest: "{{HOME.stdout_lines[0]}}/.config/i3/polybar"
+
+    - name: About batery module in the i3 bar
+      pause:
+        prompt: "NOTE: If the battery cannot be checked from the i3 polybar, read troubleshooting from here: https://github.com/adi1090x/polybar-themes"
