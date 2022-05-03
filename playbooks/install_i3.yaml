@@ -38,11 +38,6 @@
         - i3-gaps
       update_cache: yes
 
-  - name: Install i3-layouts
-    pip:
-      name: i3-layouts
-    become: no
-
   - name: Install dependencies to open new terminals in same directory
     apt:
       name: libx11-dev
