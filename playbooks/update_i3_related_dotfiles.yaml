@@ -22,3 +22,8 @@
     ansible.builtin.copy:
       src: "{{HOME.stdout_lines[0]}}/.config/polybar/forest"
       dest: "{{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/cfg"
+
+  - name: Update picom configuration (terminal transparency and blur)
+    ansible.builtin.copy:
+      src: "{{HOME.stdout_lines[0]}}/.config/picom/picom.conf"
+      dest: "{{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/cfg/picom/picom.conf"

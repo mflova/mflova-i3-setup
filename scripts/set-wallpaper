@@ -1,2 +1,2 @@
-echo "feh --bg-scale mflova-linux-setup/mflova-i3-setup/wallpaper/wallpaper.png" >> ~/.profile
+echo "feh --bg-scale mflova-linux-setup/mflova-i3-setup/wallpaper/vaporwave.png" >> ~/.profile
 

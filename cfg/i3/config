@@ -43,7 +43,7 @@ floating_modifier $mod
 
 # start a terminal
 # bindsym $mod+Return exec "terminator --working-directory=`xcwd`"
-bindsym $mod+Return exec cd "$(xcwd)" && exec terminator
+bindsym $mod+Return exec terminator
 bindsym $mod+Shift+Return exec google-chrome
 # Alternative:
 # bindsym $mod+Shift+Return exec terminator --working-directory="`xcwd`"
@@ -115,7 +115,8 @@ set $ws2 "2:vim"
 set $ws3 "3:web"
 set $ws4 "4:misc"
 set $ws5 "5:chat"
-set $ws7 "6:media"
+set $ws6 "6:media"
+set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"

@@ -1,2 +1,4 @@
 To set the wallpaper up, just write:
 feh --bg-scale path/to/img
+
+For startup, write it in ~/.profile

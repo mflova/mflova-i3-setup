@@ -23,7 +23,7 @@
       dest: "{{HOME.stdout_lines[0]}}/.config/i3/"
 
   - name: Set wallpaper
-    shell: 'echo "feh --bg-scale {{playbook_dir}}/../wallpaper/wallpaper.png" >> ~/.profile'
+    shell: 'echo "feh --bg-scale {{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/wallpaper/tokyo_night_plants_blue.png" >> ~/.profile'
     become: no
 
   - name: Add i3-gaps repository
@@ -47,15 +47,17 @@
       repo: https://github.com/schischi/xcwd
       dest: "{{playbook_dir}}/../repos/xcwd"
 
-  - name: Build the script to open new terminals in same directory
-    shell: 
-      cmd: make
-      chdir: "{{playbook_dir}}/../repos/xcwd"
+  - name: Set new terminals with previous path
+    shell: "cat {{playbook_dir}}/../scripts/terminal_previous_path.sh >> ~/.bashrc"
+    become: no
 
-  - name: Install the script to open new terminals in same directory
-    shell: 
-      cmd : make install
-      chdir: "{{playbook_dir}}/../repos/xcwd"
+  - name: Set bash colors for username
+    shell: "echo force_color_prompt=yes >> ~/.bashrc"
+    become: no
+
+  - name: Set default terminal for I3
+    shell: "echo export TERMINAL=terminator >> ~/.profile"
+    become: no
 
   - name: Install python3 for the written scripts
     apt:
@@ -74,6 +76,16 @@
   - name: Install i3ipc through shell command
     become: no
     shell: "pip install i3ipc"
+
+  - name: Install i3-layouts
+    become: no
+    pip:
+      name: i3-layouts
+
+  - name: Copy picom configuration
+    ansible.builtin.copy:
+      src: "{{playbook_dir}}/../cfg/picom/picom.conf"
+      dest: "{{HOME.stdout_lines[0]}}/.config/picom/picom.conf"
 
   - name: Copy gtk configuration for terminal padding
     ansible.builtin.copy:
