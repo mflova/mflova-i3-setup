@@ -46,6 +46,7 @@
       git:
         repo: https://github.com/jaagr/polybar.git
         dest: "{{playbook_dir}}/../repos/polybar"
+      become: no
 
     - name: Set repo as safe
       shell: "git config --global --add safe.directory {{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/repos/polybar"
@@ -76,6 +77,7 @@
       git:
         repo: https://github.com/adi1090x/polybar-themes.git
         dest: "{{playbook_dir}}/../repos/polybar-themes"
+      become: no
 
     - name: Set polybar themes permissions
       shell: chmod +x {{playbook_dir}}/../repos/polybar-themes/setup.sh
