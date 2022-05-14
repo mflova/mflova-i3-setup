@@ -83,7 +83,6 @@
       ansible.builtin.copy:
         src: "{{playbook_dir}}/../cfg/forest"
         dest: "{{HOME.stdout_lines[0]}}/.config/polybar"
-      become: no
 
     - name: About batery module in the i3 bar
       pause:
