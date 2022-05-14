@@ -77,7 +77,7 @@
 
     - name: Install polybar themes
       pause:
-        prompt: "From {{playbook_dir}}/../repos/polybar-themes, run 'sudo -E bash setup.sh' with option 1"
+        prompt: "Execute 'cd {{playbook_dir}}/../repos/polybar-themes && sudo -E bash setup.sh' and select option 1"
 
     - name: Copy personal configuration
       ansible.builtin.copy:
