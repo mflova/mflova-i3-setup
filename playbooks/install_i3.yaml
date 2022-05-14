@@ -39,15 +39,6 @@
         - i3-gaps
       update_cache: yes
 
-  - name: Install dependencies to open new terminals in same directory
-    apt:
-      name: libx11-dev
-
-  - name: Cloning repo to open new terminals in same directory
-    git:
-      repo: https://github.com/schischi/xcwd
-      dest: "{{playbook_dir}}/../repos/xcwd"
-
   - name: Set new terminals with previous path
     shell: "cat {{playbook_dir}}/../scripts/terminal_previous_path.sh >> ~/.bashrc"
     become: no
