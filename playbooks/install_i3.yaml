@@ -82,11 +82,6 @@
     pip:
       name: i3-layouts
 
-  - name: Copy picom configuration
-    ansible.builtin.copy:
-      src: "{{playbook_dir}}/../cfg/picom/picom.conf"
-      dest: "{{HOME.stdout_lines[0]}}/.config/picom/picom.conf"
-
   - name: Copy gtk configuration for terminal padding
     ansible.builtin.copy:
       src: "{{playbook_dir}}/../cfg/gtk-3.0/gtk.css"
