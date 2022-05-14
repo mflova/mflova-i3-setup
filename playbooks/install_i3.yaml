@@ -23,7 +23,7 @@
       dest: "{{HOME.stdout_lines[0]}}/.config/i3/"
 
   - name: Set wallpaper
-    shell: 'echo "feh --bg-scale {{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/wallpaper/tokyo_night_plants_blue.png" >> ~/.profile'
+    shell: 'echo "feh --bg-scale {{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/wallpaper/tokyo_night_plants_blue.jpg" >> ~/.profile'
     become: no
 
   - name: Add i3-gaps repository
