@@ -1,5 +1,0 @@
-- name: Install I3 windows manager
-  import_playbook: "{{playbook_dir}}/playbooks/install_i3.yaml"
-
-- name: Install I3 polybar status bar
-  import_playbook: "{{playbook_dir}}/playbooks/polybar.yaml"
