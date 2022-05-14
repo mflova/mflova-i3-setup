@@ -42,8 +42,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-# bindsym $mod+Return exec "terminator --working-directory=`xcwd`"
-bindsym $mod+Return exec terminator
+bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+Return exec google-chrome
 # Alternative:
 # bindsym $mod+Shift+Return exec terminator --working-directory="`xcwd`"
@@ -65,10 +64,10 @@ bindsym $mod+l focus up
 bindsym $mod+ntilde focus right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+ bindsym $mod+Left focus left
+ bindsym $mod+Down focus down
+ bindsym $mod+Up focus up
+ bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+j move left
@@ -77,16 +76,21 @@ bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+#bindsym $mod+Shift+Left move left
+#bindsym $mod+Shift+Down move down
+#bindsym $mod+Shift+Up move up
+#bindsym $mod+Shift+Right move right
+# Updated keybindings for i3-layouts
+bindsym $mod+Shift+Left exec i3l move left
+bindsym $mod+Shift+Down exec i3l move down
+bindsym $mod+Shift+Up exec i3l move up
+bindsym $mod+Shift+Right exec i3l move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+h split v
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split h
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -219,8 +223,12 @@ set $window_delay 1 # Increase if the startup does not work well
 # Launch polybar status bar (https://github.com/polybar/polybar/wiki)
 # forest
 default_orientation vertical
-for_window [class="^"] split toggle
+# Alternating pattern when creating windows
+#for_window [class="^"] split toggle
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh --forest
+# backend glx is for better performance. Experimental backend to allow more blur types.
+# Working only i kitty
+# exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 
 # Assign Workspaces:
 for_window [class="Spotify"] move to workspace $ws6
@@ -243,15 +251,26 @@ bindsym Print       exec flameshot full
 bindsym Shift+Print exec flameshot gui
 
 # Small border in the focuses window
+# This also removes the title tab
 for_window [class=".*"] border pixel 1
 # Color of the border
 client.focused #000000 #285577 #ffffff #37827e #37827e
 
+focus_on_window_activation focus
+
 # Gaps
 gaps outer 5
-gaps inner 10
+gaps inner 15
 
-# Dynamic layouts
-# exec i3-layouts
-# set $i3l vstack to workspace $ws1
-# set $i3l vstack to workspace $ws3
+## Dynamic layouts
+set $i3l vstack to workspace $ws1
+set $i3l vstack to workspace $ws2
+set $i3l vstack to workspace $ws3
+set $i3l vstack to workspace $ws4
+set $i3l vstack to workspace $ws5
+set $i3l vstack to workspace $ws6
+set $i3l vstack to workspace $ws7
+
+# Add --debug > ~/i3-debug.log 2>&1 for debugging
+exec_always i3-layouts 
+
