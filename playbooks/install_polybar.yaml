@@ -7,6 +7,11 @@
       become: no
       register: HOME
 
+    - name: Get $USER
+      shell: echo $USER
+      become: no
+      register: USER
+
     - name: Install Polybar dependencies
       apt:
         name:
@@ -83,6 +88,13 @@
       ansible.builtin.copy:
         src: "{{playbook_dir}}/../cfg/forest"
         dest: "{{HOME.stdout_lines[0]}}/.config/polybar"
+
+    - name: Change polybar dir ownership
+      file:
+        path: "/home/{{USER.stdout_lines[0]}}/.config/polybar"
+        owner: "{{USER.stdout_lines[0]}}"
+        group: "{{USER.stdout_lines[0]}}"
+        recurse: yes
 
     - name: About batery module in the i3 bar
       pause:
