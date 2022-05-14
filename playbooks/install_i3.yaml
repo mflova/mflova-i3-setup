@@ -21,6 +21,7 @@
     ansible.builtin.copy:
       src: "{{playbook_dir}}/../cfg/i3/config"
       dest: "{{HOME.stdout_lines[0]}}/.config/i3/"
+    become: no
 
   - name: Set wallpaper
     shell: 'echo "feh --bg-scale {{HOME.stdout_lines[0]}}/mflova-linux-setup/mflova-i3-setup/wallpaper/tokyo_night_plants_blue.jpg" >> ~/.profile'
@@ -86,3 +87,5 @@
     ansible.builtin.copy:
       src: "{{playbook_dir}}/../cfg/gtk-3.0/gtk.css"
       dest: "{{HOME.stdout_lines[0]}}/.config/gtk-3.0/"
+    become: no
+
