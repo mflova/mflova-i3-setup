@@ -79,15 +79,11 @@
       pause:
         prompt: "From {{playbook_dir}}/../repos/polybar-themes, run 'sudo -E bash setup.sh' with option 1"
 
-    - name: Get $HOME variable
-      shell: "echo $HOME"
-      become: no
-      register: HOME
-
     - name: Copy personal configuration
       ansible.builtin.copy:
         src: "{{playbook_dir}}/../cfg/forest"
-        dest: "{{HOME.stdout_lines[0]}}/.config/i3/polybar"
+        dest: "{{HOME.stdout_lines[0]}}/.config/polybar"
+      become: no
 
     - name: About batery module in the i3 bar
       pause:
