@@ -69,10 +69,15 @@
     become: no
     shell: "pip install i3ipc"
 
-  - name: Install i3-layouts
+  - name: Clone i3-layouts from mflova
     become: no
+    git:
+      repo: https://github.com/mflova/i3-layouts
+      dest: /tmp/i3-layouts
+
+  - name: Locally install i3-layouts
     pip:
-      name: i3-layouts
+      name: /tmp/i3-layouts
 
   - name: Copy gtk configuration for terminal padding
     ansible.builtin.copy:
